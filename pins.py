@@ -6,7 +6,6 @@ import config
 def off():
     for p in config.PINS:
         GPIO.output(p, GPIO.LOW)
-    sleep(0.5)
 
 def setOutput(pin, level, sleepSec):
     GPIO.output(pin, level)
@@ -38,16 +37,20 @@ def yellow_button_pressed():
     return GPIO.input(config.YELLOW_BUTTON)
 
 def check_led_cycle():
-    if config.RUNNING:
-        config.LOCK.acquire()
-        config.RUNNING = False
-        config.LOCK.release()
-        off()
-    else:
-        config.LOCK.acquire()
-        config.RUNNING = True
-        config.LOCK.release()
-        LedThread().start()
+    if red_button_pressed() and not config.RED_BUTTON_DOWN:
+        config.RED_BUTTON_DOWN = True
+        if config.RUNNING:
+            config.LOCK.acquire()
+            config.RUNNING = False
+            config.LOCK.release()
+            off()
+        else:
+            config.LOCK.acquire()
+            config.RUNNING = True
+            config.LOCK.release()
+            LedThread().start()
+    elif not red_button_pressed():
+        config.RED_BUTTON_DOWN = False
 
 def check_blue_led():
     if blue_button_pressed() and not yellow_button_pressed():
