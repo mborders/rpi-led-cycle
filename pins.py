@@ -1,4 +1,5 @@
 from time import sleep
+from led_thread import LedThread
 import RPi.GPIO as GPIO
 import config
 
@@ -24,6 +25,9 @@ def init():
     for p in config.PINS:
         GPIO.setup(p, GPIO.OUT, initial=GPIO.LOW)
 
+    if config.RUNNING:
+        LedThread().start()
+
 def red_button_pressed():
     return GPIO.input(config.RED_BUTTON)
 
@@ -32,6 +36,18 @@ def blue_button_pressed():
 
 def yellow_button_pressed():
     return GPIO.input(config.YELLOW_BUTTON)
+
+def check_led_cycle():
+    if config.RUNNING:
+        config.LOCK.acquire()
+        config.RUNNING = False
+        config.LOCK.release()
+        off()
+    else:
+        config.LOCK.acquire()
+        config.RUNNING = True
+        config.LOCK.release()
+        LedThread().start()
 
 def check_blue_led():
     if blue_button_pressed() and not yellow_button_pressed():
