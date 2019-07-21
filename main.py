@@ -1,8 +1,6 @@
-import RPi.GPIO as GPIO
 from time import sleep
-import threading
-import config
 from led_thread import LedThread
+import config
 import pins
 
 pins.init()
@@ -12,7 +10,7 @@ if config.RUNNING:
     LedThread().start()
 
 while True:
-  if GPIO.input(14):
+  if pins.red_button_pressed():
     sleep(0.1)
     config.LOCK.acquire()
     isRunning = config.RUNNING
@@ -29,19 +27,7 @@ while True:
       LedThread().start()
       config.LOCK.release()
 
-  if GPIO.input(19) and not GPIO.input(6):
-    GPIO.output(26, GPIO.HIGH)
-  else:
-    GPIO.output(26, GPIO.LOW)
-
-  if GPIO.input(6) and not GPIO.input(19):
-    GPIO.output(13, GPIO.HIGH)
-  else:
-    GPIO.output(13, GPIO.LOW)
-
-  if GPIO.input(19) and GPIO.input(6):
-    GPIO.output(5, GPIO.HIGH)
-  else:
-    GPIO.output(5, GPIO.LOW)
-
+  pins.check_blue_led()
+  pins.check_yellow_led()
+  pins.check_green_led()
   sleep(0.1)

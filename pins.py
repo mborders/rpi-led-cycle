@@ -14,12 +14,39 @@ def setOutput(pin, level, sleepSec):
 def init():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(26, GPIO.OUT, initial=GPIO.LOW)
-    GPIO.setup(13, GPIO.OUT, initial=GPIO.LOW)
-    GPIO.setup(5, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(config.RED_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(config.BLUE_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(config.YELLOW_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(config.BLUE_LED, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(config.YELLOW_LED, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(config.GREEN_LED, GPIO.OUT, initial=GPIO.LOW)
 
     for p in config.PINS:
         GPIO.setup(p, GPIO.OUT, initial=GPIO.LOW)
+
+def red_button_pressed():
+    return GPIO.input(config.RED_BUTTON)
+
+def blue_button_pressed():
+    return GPIO.input(config.BLUE_BUTTON)
+
+def yellow_button_pressed():
+    return GPIO.input(config.YELLOW_BUTTON)
+
+def check_blue_led():
+    if blue_button_pressed() and not yellow_button_pressed():
+        GPIO.output(config.BLUE_LED, GPIO.HIGH)
+    else:
+        GPIO.output(config.BLUE_LED, GPIO.LOW)
+
+def check_yellow_led():
+    if yellow_button_pressed() and not blue_button_pressed():
+        GPIO.output(config.YELLOW_LED, GPIO.HIGH)
+    else:
+        GPIO.output(config.YELLOW_LED, GPIO.LOW)
+
+def check_green_led():
+    if blue_button_pressed() and yellow_button_pressed():
+        GPIO.output(config.GREEN_LED, GPIO.HIGH)
+    else:
+        GPIO.output(config.GREEN_LED, GPIO.LOW)
