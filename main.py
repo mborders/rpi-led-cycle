@@ -12,11 +12,8 @@ if config.RUNNING:
 while True:
   if pins.red_button_pressed():
     sleep(0.1)
-    config.LOCK.acquire()
-    isRunning = config.RUNNING
-    config.LOCK.release()
 
-    if isRunning:
+    if config.RUNNING:
       config.LOCK.acquire()
       pins.off()
       config.RUNNING = False
