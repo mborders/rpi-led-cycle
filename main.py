@@ -1,17 +1,16 @@
 from time import sleep
 from heartbeat_thread import HeartbeatThread
+from pin_thread import PinThread
 import pins
 import config
 
+# Setup GPIO
 pins.init()
 
-hb = HeartbeatThread(config.HEARTBEAT_LED, config.HEARTBEAT_TIME)
-hb.start()
+# Heartbeat to indicate application is running
+ht = HeartbeatThread(config.HEARTBEAT_LED, config.HEARTBEAT_TIME)
+ht.start()
 
-print('Starting loop')
-while True:
-  pins.check_led_cycle()
-  pins.check_blue_led()
-  pins.check_yellow_led()
-  pins.check_green_led()
-  sleep(0.1)
+# Pin input/output checks
+pt = PinThread(config.LED_CYCLE_TIME)
+pt.start()
