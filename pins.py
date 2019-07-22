@@ -17,6 +17,7 @@ def init():
     GPIO.setup(config.RED_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(config.BLUE_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(config.YELLOW_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(config.HEARTBEAT_LED, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(config.BLUE_LED, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(config.YELLOW_LED, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(config.GREEN_LED, GPIO.OUT, initial=GPIO.LOW)

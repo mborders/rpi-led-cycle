@@ -15,7 +15,7 @@ class LedThread (threading.Thread):
                     config.LOCK.release()
                     break
                 config.LOCK.release()
-                pins.setOutput(p, GPIO.HIGH, config.TIME)
+                pins.setOutput(p, GPIO.HIGH, config.LED_CYCLE_TIME)
                 pins.setOutput(p, GPIO.LOW, 0)
 
             config.LOCK.acquire()
