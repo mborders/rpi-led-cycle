@@ -1,4 +1,3 @@
-from time import sleep
 from heartbeat_thread import HeartbeatThread
 from pin_thread import PinThread
 import pins

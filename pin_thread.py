@@ -2,7 +2,8 @@ import threading
 import pins
 from time import sleep
 
-class PinThread (threading.Thread):
+
+class PinThread(threading.Thread):
     def __init__(self, time):
         threading.Thread.__init__(self)
         self.time = time

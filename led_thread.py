@@ -1,10 +1,10 @@
-import RPi.GPIO as GPIO
 import threading
-import time
+import RPi.GPIO as GPIO
 import config
 import pins
 
-class LedThread (threading.Thread):
+
+class LedThread(threading.Thread):
     def run(self):
         print('Starting lights')
 

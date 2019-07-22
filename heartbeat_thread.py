@@ -2,7 +2,8 @@ import RPi.GPIO as GPIO
 import threading
 from time import sleep
 
-class HeartbeatThread (threading.Thread):
+
+class HeartbeatThread(threading.Thread):
     def __init__(self, pin, time):
         threading.Thread.__init__(self)
         self.on = False

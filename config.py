@@ -3,7 +3,7 @@ import threading
 HEARTBEAT_TIME = 0.5
 LED_CYCLE_TIME = 0.05
 RUNNING = False
-PINS = [15, 18, 23, 24,25,8,7,1,12,16,20,21]
+PINS = [15, 18, 23, 24, 25, 8, 7, 1, 12, 16, 20, 21]
 LOCK = threading.Lock()
 
 RED_BUTTON = 14
